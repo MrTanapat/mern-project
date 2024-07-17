@@ -1,5 +1,10 @@
 # Fashion Cube-Ecommerce Application
 
+
+#Install Project
+
+  export NODE_OPTIONS=--openssl-legacy-provider
+
 #General Info
 
 front-end: Reactjs, Redux, Axios, Sass, react-bootstrap
