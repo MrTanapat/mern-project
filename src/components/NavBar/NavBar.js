@@ -1,9 +1,3 @@
-/*
- ** Author: Santosh Kumar Dash
- ** Author URL: http://santoshdash.epizy.com/
- ** Github URL: https://github.com/quintuslabs/fashion-cube
- */
-
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import HomeCartView from "../HomeCartView";
@@ -11,13 +5,19 @@ import MobileMenu from "../MobileMenu";
 import device, { size } from "../../modules/mediaQuery";
 import MediaQuery from "react-responsive";
 
+
 class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       modalShow: false,
       activeclass: false,
+      shopDropdown: false
     };
+  }
+
+  toggleShopDropdown = () => {
+    this.setState({ shopDropdown: !this.state.shopDropdown});
   }
 
   componentDidMount() {
@@ -52,10 +52,9 @@ class NavBar extends Component {
                     <Link to="/home">home</Link>
                   </li>
                   <li className="mega-drop-down">
-                    <a href="#">
+                    <a href="#" onClick={this.toggleShopDropdown}>
                       shop <i className="fa fa-angle-down"></i>
                     </a>
-
                     <div className="mega-menu">
                       <div className="mega-menu-wrap">
                         {departments &&
@@ -67,11 +66,11 @@ class NavBar extends Component {
                                   {item.categories.split(",").map((i, idx) => {
                                     return (
                                       <li key={idx}>
-                                        <a
-                                          href={`/fashion-cube/shops/${item.departmentName}/${i}`}
+                                        <Link
+                                          href={`/fashion-cube/shops/${item.departmentName}/${i}`} // props ข้อมูลจาก API
                                         >
                                           {i}
-                                        </a>
+                                        </Link>
                                       </li>
                                     );
                                   })}
@@ -84,7 +83,7 @@ class NavBar extends Component {
                   </li>
 
                   <li>
-                    <a href="contact.html">contact</a>
+                    <Link to="/fashion-cube/contact">contact</Link>
                   </li>
                 </ul>
                 <ul className="navbar_user">

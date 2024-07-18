@@ -14,6 +14,7 @@ import BaseLayout from "../layouts/BaseLayout";
 import Home from "../views/Home/HomeContainer";
 import SingleProductContainer from "../views/Product/SingleProductContainer";
 import CategoryContainer from "../views/Category/CategoryContainer";
+import ContactContainer from "../views/contact/ContactContainer";
 
 var routes = [
   {
@@ -38,6 +39,11 @@ var routes = [
     layout: BaseLayout,
     component: CategoryContainer,
   },
+  {
+    path: "/fashion-cube/contact",
+    layout: BaseLayout,
+    component: ContactContainer,
+  }
 ];
 
 export default routes;
