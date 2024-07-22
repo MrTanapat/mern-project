@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import HomeCartView from "../HomeCartView";
 import MobileMenu from "../MobileMenu";
-import device, { size } from "../../modules/mediaQuery";
+import device from "../../modules/mediaQuery";
 import MediaQuery from "react-responsive";
-
+import Axios from "axios";
 
 class NavBar extends Component {
   constructor(props) {
@@ -17,12 +17,22 @@ class NavBar extends Component {
   }
 
   toggleShopDropdown = () => {
-    this.setState({ shopDropdown: !this.state.shopDropdown});
+    this.setState({ shopDropdown: !this.state.shopDropdown });
   }
 
   componentDidMount() {
     if (Object.keys(this.props.cart).length < 1) {
       this.props.getCartByUserId();
+    }
+    this.fetchDepartments();
+  }
+
+  fetchDepartments = async () => {
+    try {
+      const response = await Axios.get('/api/departments');
+      this.setState({ departments: response.data.departments });
+    } catch (error) {
+      console.error("There was an error fetching the departments!", error);
     }
   }
 
@@ -33,7 +43,9 @@ class NavBar extends Component {
   handleMenuClicked = () => {
     this.setState({ activeclass: !this.state.activeclass });
   };
+
   render() {
+    const { shopDropdown } = this.state;
     const { departments, cart } = this.props;
 
     return (
@@ -55,33 +67,30 @@ class NavBar extends Component {
                     <a href="#" onClick={this.toggleShopDropdown}>
                       shop <i className="fa fa-angle-down"></i>
                     </a>
-                    <div className="mega-menu">
-                      <div className="mega-menu-wrap">
-                        {departments &&
-                          departments.map((item, index) => {
-                            return (
+                    {shopDropdown && (
+                      <div className="mega-menu">
+                        <div className="mega-menu-wrap">
+                          {departments &&
+                            departments.map((item, index) => (
                               <div className="mega-menu-content" key={index}>
                                 <h5>{item.departmentName}</h5>
                                 <ul className="stander">
-                                  {item.categories.split(",").map((i, idx) => {
-                                    return (
-                                      <li key={idx}>
-                                        <Link
-                                          href={`/fashion-cube/shops/${item.departmentName}/${i}`} // props ข้อมูลจาก API
-                                        >
-                                          {i}
-                                        </Link>
-                                      </li>
-                                    );
-                                  })}
+                                  {item.categories.split(",").map((i, idx) => (
+                                    <li key={idx}>
+                                      <Link
+                                        to={`/fashion-cube/shops/${item.departmentName}/${i}`}
+                                      >
+                                        {i}
+                                      </Link>
+                                    </li>
+                                  ))}
                                 </ul>
                               </div>
-                            );
-                          })}
+                            ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </li>
-
                   <li>
                     <Link to="/fashion-cube/contact">contact</Link>
                   </li>
@@ -124,13 +133,13 @@ class NavBar extends Component {
             onClose={() => this.handleMenuClicked()}
           />
         </MediaQuery>
-        {this.state.modalShow ? (
+        {this.state.modalShow && (
           <HomeCartView
             cart={cart}
             show={this.state.modalShow}
             onHide={() => this.showHideModal()}
           />
-        ) : null}
+        )}
       </div>
     );
   }

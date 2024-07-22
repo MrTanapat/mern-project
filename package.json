@@ -5,7 +5,7 @@
   "homepage": "https://quintuslabs.github.io/fashion-cube",
   "repository": {
     "type": "git",
-    "url": "https://github.com/quintuslabs/fashion-cube"
+    "url": "git+https://github.com/quintuslabs/fashion-cube.git"
   },
   "keywords": [
     "fashion",
@@ -20,8 +20,13 @@
     "@testing-library/user-event": "^7.1.2",
     "aos": "^3.0.0-beta.6",
     "axios": "^0.19.2",
+    "body-parser": "^1.20.2",
     "bootstrap": "^4.4.1",
     "classnames": "^2.2.6",
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "mongodb": "^6.8.0",
+    "mongoose": "^8.5.1",
     "node-sass": "^4.14.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
@@ -58,5 +63,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "description": "export NODE_OPTIONS=--openssl-legacy-provider",
+  "bugs": {
+    "url": "https://github.com/quintuslabs/fashion-cube/issues"
+  },
+  "main": "index.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
 }

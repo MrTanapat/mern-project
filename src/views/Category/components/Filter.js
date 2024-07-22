@@ -1,45 +1,63 @@
-/*
- ** Author: Santosh Kumar Dash
- ** Author URL: http://santoshdash.epizy.com/
- ** Github URL: https://github.com/quintuslabs/fashion-cube
- */
-
 import React, { Component } from "react";
+import Axios from "axios";
 
 class Filter extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      selectedFilter: "Women",
+      products: [],
+    };
   }
+
+  componentDidMount() {
+    this.fetchProducts();
+  }
+
+  handleFilterChange = (category) => {
+    this.setState({ selectedFilter: category }, this.fetchProducts);
+  };
+
+  fetchProducts = async () => {
+    try {
+      const response = await Axios.get(`/api/products?category=${this.state.selectedFilter}`);
+      this.setState({ products: response.data.products });
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
   render() {
+    const { selectedFilter } = this.state;
+
     return (
-      <div class="sidebar_section">
-        <div class="sidebar_title">
+      <div className="sidebar_section">
+        <div className="sidebar_title">
           <h5>Product Category</h5>
         </div>
-        <ul class="sidebar_categories">
-          <li>
-            <a href="#">Men</a>
+        <ul className="sidebar_categories">
+          <li className={selectedFilter === "Men" ? "active" : ""}>
+            <a href="#" onClick={() => this.handleFilterChange("Men")}>Men</a>
           </li>
-          <li class="active">
-            <a href="#">
+          <li className={selectedFilter === "Women" ? "active" : ""}>
+            <a href="#" onClick={() => this.handleFilterChange("Women")}>
               <span>
-                <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                <i className="fa fa-angle-double-right" aria-hidden="true"></i>
               </span>
               Women
             </a>
           </li>
-          <li>
-            <a href="#">Accessories</a>
+          <li className={selectedFilter === "Accessories" ? "active" : ""}>
+            <a href="#" onClick={() => this.handleFilterChange("Accessories")}>Accessories</a>
           </li>
-          <li>
-            <a href="#">New Arrivals</a>
+          <li className={selectedFilter === "New Arrivals" ? "active" : ""}>
+            <a href="#" onClick={() => this.handleFilterChange("New Arrivals")}>New Arrivals</a>
           </li>
-          <li>
-            <a href="#">Collection</a>
+          <li className={selectedFilter === "Collection" ? "active" : ""}>
+            <a href="#" onClick={() => this.handleFilterChange("Collection")}>Collection</a>
           </li>
-          <li>
-            <a href="#">Shop</a>
+          <li className={selectedFilter === "Shop" ? "active" : ""}>
+            <a href="#" onClick={() => this.handleFilterChange("Shop")}>Shop</a>
           </li>
         </ul>
       </div>

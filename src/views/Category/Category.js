@@ -1,9 +1,3 @@
-/*
- ** Author: Santosh Kumar Dash
- ** Author URL: http://santoshdash.epizy.com/
- ** Github URL: https://github.com/quintuslabs/fashion-cube
- */
-
 import React, { Component } from "react";
 import SingleProduct from "../../components/Products/SingleProduct";
 import Auth from "../../modules/Auth";
@@ -72,7 +66,7 @@ class Category extends Component {
                   </a>
                 </li>
                 <li class="active">
-                  <a href="#">
+                  <a href="/">
                     <i class="fa fa-angle-right" aria-hidden="true"></i>
                     {this.props.location.pathname.split("/")[3]}
                   </a>
